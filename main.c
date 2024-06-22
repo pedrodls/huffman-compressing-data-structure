@@ -15,28 +15,35 @@ int main() {
     No *arvore;
     int colunas;
     char **dicionario;
+    char *codificado;
 
-    /*---------------------------------PARTE 1: TABELA DE FREQU NCIA-------------------*/
+    /*--------------------- PARTE 1: TABELA DE FREQU NCIA----------------------*/
 
     inicializar_tabela(tabela_frequencia);
     preencher_tab_frequencia(texto, tabela_frequencia);
     imprimir_tab_frequencia(tabela_frequencia);
 
-    /*--------------------- PARTE 2: LISTA ENCADEADA ORDENADA---------------*/
+    /*--------------------- PARTE 2: LISTA ENCADEADA ORDENADA-------------------*/
 
     criar_lista(&lista);
     preencher_lista(tabela_frequencia, &lista);
     imprimir_lista(&lista);
 
-    /*--------------------- PARTE 3: Montar ¡rvore de  Huffman ---------------*/
+    /*--------------------- PARTE 3: Montar ¡rvore de  Huffman -----------------*/
     arvore = montar_arvore(&lista);
     printf("\n\t¡rvore de Ruffman\n");
     imprimir_arvore(arvore, 0);
 
-    /*--------------------- PARTE 4: Montar o Dicion·rio ---------------*/
+    /*--------------------- PARTE 4: Montar o Dicion·rio ------------------------*/
     colunas = altura_arvore(arvore) + 1;
     dicionario = aloca_dicionario(colunas);
     gerar_dicionario(dicionario, arvore, "", colunas);
     imprimir_dicionario(dicionario);
+
+    /*--------------------- PARTE 5: Codificar ----------------------------------*/
+
+    codificado = codificar(dicionario, texto);
+    printf("\n\tTexto Codificado: %s\n", codificado);
+
     return 0;
 }
