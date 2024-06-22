@@ -159,6 +159,10 @@ int altura_arvore(No *raiz) {
     }
 }
 
+/*
+ *
+ */
+
 char** aloca_dicionario(int colunas) {
     char **dicionario;
     int i;
@@ -171,6 +175,9 @@ char** aloca_dicionario(int colunas) {
 
     return dicionario;
 }
+
+/*
+ */
 
 void gerar_dicionario(char **dicionario, No *raiz, char *caminho, int colunas) {
     char esquerda[colunas], direita[colunas];
@@ -201,4 +208,28 @@ void imprimir_dicionario(char **dicionario) {
     }
 }
 
+/*--------------------- PARTE 5: Codificar ----------------------------------*/
+int calcular_tamanho_string(char **dicionario, char *texto) {
+    int i = 0, tam = 0;
+    while (texto[i] != '\0') {
+        tam = tam + strlen(dicionario[texto[i]]);
+        i++;
+    }
+
+    return tam + 1;
+}
+
+char *codificar(char **dicionario, unsigned char *texto) {
+
+    int i = 0, tam = calcular_tamanho_string(dicionario, texto);
+
+    char *codigo = calloc(tam, sizeof(char));
+
+    while (texto[i] != '\0') {
+        strcat(codigo, dicionario[texto[i]]);
+        i++;
+    }
+
+    return codigo;
+}
 

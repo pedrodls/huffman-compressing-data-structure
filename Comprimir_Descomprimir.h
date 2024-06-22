@@ -1,6 +1,8 @@
 #ifndef COMPRIMIR_DESCOMPRIMIR_H
 #define COMPRIMIR_DESCOMPRIMIR_H
 
+/*--------------------- PARTE 1: TABELA DE FREQUÊNCIA----------------------*/
+
 typedef struct no {
     unsigned char caracter;
     int frequencia;
@@ -11,6 +13,7 @@ typedef struct lista {
     No *inicio;
     int tam;
 }Lista;
+
 
 // Inicializa a tabela com zeros
 void inicializar_tabela(unsigned int tab[]);
@@ -41,10 +44,15 @@ No *remove_no_inicio(Lista *lista);
 No *montar_arvore(Lista *lista);
 void imprimir_arvore(No *raiz, int tam);
 
-/*---------------------PARTE 4: Montar o Dicionário ---------------*/
+/*---------------------PARTE 4: Montar o Dicionário ----------------------*/
+
 int altura_arvore(No *raiz);
 char** aloca_dicionario(int colunas);
 void gerar_dicionario(char **dicionario, No *raiz, char *caminho, int colunas);
 void imprimir_dicionario(char **dicionario);
+
+/*--------------------- PARTE 5: Codificar ----------------------------------*/
+int calcular_tamanho_string(char **dicionario, char *texto);
+char *codificar(char **dicionario, unsigned char *texto);
 
 #endif //COMPRIMIR_DESCOMPRIMIR_H
