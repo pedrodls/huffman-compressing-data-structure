@@ -133,7 +133,7 @@ No *montar_arvore(Lista *lista) {
 
 void imprimir_arvore(No *raiz, int tam) {
     if (raiz->esq == NULL && raiz->dir == NULL) {
-        printf("\tFolha: %c\tAltura: %d\n", raiz->caracter, tam);
+        printf("\tFolha: %c\t Altura: %d\n", raiz->caracter, tam);
     }else {
         imprimir_arvore(raiz->esq, tam + 1);
         imprimir_arvore(raiz->dir, tam + 1);
@@ -209,7 +209,7 @@ void imprimir_dicionario(char **dicionario) {
 }
 
 /*--------------------- PARTE 5: Codificar ----------------------------------*/
-int calcular_tamanho_string(char **dicionario, char *texto) {
+int calcular_tamanho_string(char **dicionario,unsigned char *texto) {
     int i = 0, tam = 0;
     while (texto[i] != '\0') {
         tam = tam + strlen(dicionario[texto[i]]);
@@ -219,7 +219,7 @@ int calcular_tamanho_string(char **dicionario, char *texto) {
     return tam + 1;
 }
 
-char *codificar(char **dicionario, unsigned char *texto) {
+char* codificar(char **dicionario, unsigned char *texto) {
 
     int i = 0, tam = calcular_tamanho_string(dicionario, texto);
 
@@ -233,3 +233,129 @@ char *codificar(char **dicionario, unsigned char *texto) {
     return codigo;
 }
 
+/*--------------------- PARTE 6: Descodificar ----------------------------------*/
+char *descodificar(unsigned char texto[], No *raiz) {
+    int i = 0;
+    No *aux = raiz;
+    char temp[2];
+    char *descodificado = calloc(strlen(texto), sizeof(char));
+
+    while (texto[i] != '\0') {
+        if (texto[i] == '0') {
+            aux = aux->esq;
+        }else{
+            aux = aux->dir;
+        }
+
+        if (aux->esq == NULL && aux->dir == NULL) {
+            temp[0] = aux->caracter;
+            temp[1] = '\0';
+            strcat(descodificado, temp);
+            aux = raiz;
+        }
+
+        i++;
+    }
+
+    return descodificado;
+}
+
+/*--------------------- PARTE 7: Compactar----------------------------------*/
+void compactar(unsigned char str[]) {
+    FILE *arquivo = fopen("compactado.wg", "wb");
+    int i = 0, j = 7;
+    unsigned char mascara, byte = 0;
+
+    if (arquivo) {
+        while(str[i] != '\0') {
+            mascara = 1;
+            if(str[i] == '1') {
+                mascara = mascara << j;
+                byte = byte | mascara;
+            }
+            j--;
+
+            if (j < 0 ) { //Tem um byte formado
+                fwrite(&byte, sizeof(unsigned char), 1, arquivo);
+                byte = 0;
+                j = 7;
+            }
+            i++;
+        }
+
+        if (j != 7) {
+            fwrite(&byte, sizeof(unsigned char), 1, arquivo);
+        }
+
+        fclose(arquivo);
+    }else {
+        printf("\nErro ao Abrir/Criar arquivo em compactar\n");
+    }
+}
+
+/*--------------------- PARTE 8: Descompactar----------------------------------*/
+unsigned int verificar_bit(unsigned char byte, int i) {
+    unsigned char mascara = (1 << i);
+    return byte & mascara;
+}
+
+void descompactar(No *raiz) {
+    FILE *arquivo = fopen("compactado.wg", "rb");
+    No *aux = raiz;
+    unsigned char byte;
+    int i;
+
+    if (arquivo) {
+            while (fread(&byte, sizeof(unsigned char), 1, arquivo)) {
+                for (i = 7; i >= 0; i--) {
+                    if (verificar_bit(byte, i)) {
+                        aux = aux->dir;
+                    }else {
+                        aux = aux->esq;
+                    }
+                    if (aux->esq == NULL && aux->dir == NULL) {
+                        printf("%c", aux->caracter);
+                        aux = raiz;
+                    }
+                }
+            }
+        fclose(arquivo);
+    }else {
+        printf("\nErro ao Abrir arquivo em descompactar\n");
+    }
+}
+
+/*---------------------------------------------------------------------*/
+int descobrir_tamanho() {
+    FILE *arq = fopen("teste.txt", "r");
+    int tam = 0;
+
+    if (arq) {
+        while (fgetc(arq) != -1) {
+            tam++;
+        }
+        fclose(arq);
+    }else {
+        printf("\nErro ao Abrir arquivo em descobrir_tamanho\n");
+    }
+    return tam;
+}
+
+void ler_texto(unsigned char *texto) {
+    FILE *arq = fopen("teste.txt", "r");
+    char letra;
+    int i = 0;
+
+    if (arq) {
+        while (!feof(arq)) {
+            letra = fgetc(arq);
+            if (letra != -1) {
+                texto[i] = letra;
+                i++;
+            }
+        }
+        fclose(arq);
+    }else {
+        printf("\nErro ao Abrir arquivo em ler_texto\n");
+    }
+}

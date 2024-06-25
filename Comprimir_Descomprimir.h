@@ -52,7 +52,21 @@ void gerar_dicionario(char **dicionario, No *raiz, char *caminho, int colunas);
 void imprimir_dicionario(char **dicionario);
 
 /*--------------------- PARTE 5: Codificar ----------------------------------*/
-int calcular_tamanho_string(char **dicionario, char *texto);
+int calcular_tamanho_string(char **dicionario,unsigned char *texto);
 char *codificar(char **dicionario, unsigned char *texto);
+
+/*--------------------- PARTE 6: Decodificar ----------------------------------*/
+char *descodificar(unsigned char texto[], No *raiz);
+
+/*--------------------- PARTE 7: Compactar----------------------------------*/
+void compactar(unsigned char str[]);
+
+/*--------------------- PARTE 8: Descompactar----------------------------------*/
+unsigned int verificar_bit(unsigned char byte, int i);
+void descompactar(No *raiz);
+/*-----------------------------------------------------------------------------
+*/
+int descobrir_tamanho();
+void ler_texto(unsigned char *texto);
 
 #endif //COMPRIMIR_DESCOMPRIMIR_H
