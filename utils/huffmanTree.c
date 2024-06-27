@@ -1,4 +1,4 @@
-
+#include <stdio.h>
 #include <stdlib.h>
 #include "./minHeap.h"
 
@@ -7,8 +7,8 @@ typedef struct huffmanNode
 {
     char character;
     int frequency;
-    struct HuffmanNode *left;
-    struct HuffmanNode *right;
+    struct huffmanNode *left;
+    struct huffmanNode *right;
 
 }HuffmanNode;
 

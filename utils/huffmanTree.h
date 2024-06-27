@@ -1,5 +1,4 @@
 
-
 // Estrutura do nó da árvore de Huffman
 typedef struct huffmanNode HuffmanNode;
 
