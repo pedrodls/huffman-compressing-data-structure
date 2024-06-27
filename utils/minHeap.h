@@ -17,7 +17,5 @@ void insertMinHeap(MinHeap *minHeap, HuffmanNode *node);
 // Função para extrair o nó de menor frequência do heap mínimo
 HuffmanNode *extractMin(MinHeap *minHeap);
 
-//Função para pegar o size
-int getSize(MinHeap * minHeap){
-return minHeap->size;
-}
+// Função para pegar o size
+int getSize(MinHeap *minHeap);

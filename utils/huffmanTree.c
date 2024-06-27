@@ -1,16 +1,16 @@
 
 #include <stdlib.h>
-#include "./huffmanTree.h"
 #include "./minHeap.h"
 
 // Estrutura do nó da árvore de Huffman
-struct huffmanNode
+typedef struct huffmanNode
 {
     char character;
     int frequency;
     struct HuffmanNode *left;
     struct HuffmanNode *right;
-};
+
+}HuffmanNode;
 
 // Função para criar um novo nó de Huffman
 HuffmanNode *createNode(char character, int frequency)

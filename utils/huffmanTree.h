@@ -1,8 +1,7 @@
 
-#include "./minHeap.h"
 
 // Estrutura do nó da árvore de Huffman
-typedef struct huffmanNode Huffman;
+typedef struct huffmanNode HuffmanNode;
 
 // Função para criar um novo nó de Huffman
 HuffmanNode *createNode(char character, int frequency);
