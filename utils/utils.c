@@ -49,6 +49,8 @@ void compressFile(const char* inputFileName, const char* outputFileName, int** c
         fwrite(&buffer, 1, 1, outputFile);
     }
 
+
+
     fclose(inputFile);
     fclose(outputFile);
 }

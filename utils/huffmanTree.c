@@ -72,6 +72,7 @@ HuffmanNode* buildHuffmanTree(char* data, int* freq, int size) {
     }
 
 
+
     // O nó restante no heap é a raiz da árvore de Huffman
     return extractMin(minHeap);
 }
