@@ -1,6 +1,7 @@
 #include "huffmanTree.h"
 
-/* void getFrequency(char *str, int freq[]); */
+// Função para calcular as frequências dos caracteres em um arquivo
+void calculateFrequencies(const char* inputFileName, int freq[256]);
 
 // Função para liberar a memória alocada para a árvore de Huffman
 void freeHuffmanTree(HuffmanNode *root);
