@@ -29,6 +29,21 @@ int getFrequency(HuffmanNode *node){
     return node->frequency;
 }
 
+//Função para pegar a frequência
+HuffmanNode* getLeft(HuffmanNode *node){
+    return node->left;
+}
+
+//Função para pegar a frequência
+HuffmanNode* getRight(HuffmanNode *node){
+    return node->right;
+}
+
+// Função para pegar o caracter
+char getCharacter(HuffmanNode *node){
+    return node->character;
+}
+
 // Função para construir a árvore de Huffman
 HuffmanNode* buildHuffmanTree(char* data, int* freq, int size) {
 
@@ -110,15 +125,9 @@ void printCodes(HuffmanNode* root, int* arr, int top) {
     }
 }
 
-//Função para pegar os códigos binários
-void HuffmanCodes(char* data, int* freq, int size) {
-    // Constroi a árvore de Huffman
+//Função Principal para Construir e Obter os Códigos de Huffman
+void huffmanCodes(char data[], int freq[], int size, int** codes, int* lengths) {
     HuffmanNode* root = buildHuffmanTree(data, freq, size);
-
-
-    // Array para armazenar os códigos de Huffman
     int arr[SIZE_CHAR], top = 0;
-
-    // Gera e imprime os códigos de Huffman
-    printCodes(root, arr, top);
+    storeCodes(root, arr, top, codes, lengths);
 }

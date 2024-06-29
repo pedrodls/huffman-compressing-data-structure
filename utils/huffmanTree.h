@@ -24,4 +24,7 @@ HuffmanNode *buildHuffmanTree(char *data, int *freq, int size);
 void printCodes(HuffmanNode *root, int *arr, int top);
 
 // Função para pegar os códigos binários
-void HuffmanCodes(char data[], int freq[], int size, int **codes, int *lengths);
+void huffmanCodes(char data[], int freq[], int size, int** codes, int* lengths);
+
+// Função para verificar se um nó é uma folha
+int isLeaf(HuffmanNode* root);
