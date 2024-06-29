@@ -46,16 +46,14 @@ void freeHuffmanTree(HuffmanNode *root)
 // Função para comprimir o arquivo de entrada usando os códigos de Huffman
 void compressFile(const char *inputFileName, const char *outputFileName, int **codes, int *lengths)
 {
-    FILE *inputFile = fopen(inputFileName, "r");
-    if (!inputFile)
-    {
+    FILE* inputFile = fopen(inputFileName, "r");
+    if (!inputFile) {
         perror("Erro ao abrir o arquivo de entrada para compressão");
         return;
     }
 
-    FILE *outputFile = fopen(outputFileName, "wb");
-    if (!outputFile)
-    {
+    FILE* outputFile = fopen(outputFileName, "wb");
+    if (!outputFile) {
         perror("Erro ao abrir o arquivo de saída para compressão");
         fclose(inputFile);
         return;
@@ -63,20 +61,17 @@ void compressFile(const char *inputFileName, const char *outputFileName, int **c
 
     unsigned char buffer = 0;
     int bufferLen = 0;
-
     int c;
-    while ((c = fgetc(inputFile)) != EOF)
-    {
-        int *code = codes[(unsigned char)c];
+
+    while ((c = fgetc(inputFile)) != EOF) {
+        int* code = codes[(unsigned char)c];
         int codeLen = lengths[(unsigned char)c];
 
-        for (int i = 0; i < codeLen; i++)
-        {
+        for (int i = 0; i < codeLen; i++) {
             buffer = (buffer << 1) | code[i];
             bufferLen++;
 
-            if (bufferLen == 8)
-            {
+            if (bufferLen == 8) {
                 fputc(buffer, outputFile);
                 buffer = 0;
                 bufferLen = 0;
@@ -84,11 +79,13 @@ void compressFile(const char *inputFileName, const char *outputFileName, int **c
         }
     }
 
-    // Write any remaining bits to the output file
-    if (bufferLen > 0)
-    {
-        buffer = buffer << (8 - bufferLen); // Align remaining bits to the left
+    // Escrever os bits restantes e o número de bits válidos na última byte
+    if (bufferLen > 0) {
+        buffer = buffer << (8 - bufferLen); // Alinhar bits restantes à esquerda
         fputc(buffer, outputFile);
+        fputc(bufferLen, outputFile); // Armazenar o número de bits válidos
+    } else {
+        fputc(8, outputFile); // Caso não haja bits restantes, armazenar 8
     }
 
     fclose(inputFile);
@@ -97,29 +94,34 @@ void compressFile(const char *inputFileName, const char *outputFileName, int **c
 
 void decompressFile(const char *inputFileName, const char *outputFileName, HuffmanNode *root)
 {
-    FILE *inputFile = fopen(inputFileName, "rb");
-    if (!inputFile)
-    {
+    FILE* inputFile = fopen(inputFileName, "rb");
+    if (!inputFile) {
         perror("Erro ao abrir o arquivo de entrada para descompressão");
         return;
     }
 
-    FILE *outputFile = fopen(outputFileName, "w");
-    if (!outputFile)
-    {
+    FILE* outputFile = fopen(outputFileName, "w");
+    if (!outputFile) {
         perror("Erro ao abrir o arquivo de saída para descompressão");
         fclose(inputFile);
         return;
     }
 
-    HuffmanNode *currentNode = root;
+    HuffmanNode* currentNode = root;
     unsigned char buffer;
-    int bufferLen;
+    int bufferLen = 8; // Inicialmente, assumimos 8 bits por byte
 
-    while (fread(&buffer, 1, 1, inputFile))
-    {
-        for (int i = 7; i >= 0; --i)
-        {
+    // Ler o número de bits válidos na última byte
+    fseek(inputFile, -1, SEEK_END);
+    int lastByteBits = fgetc(inputFile);
+    fseek(inputFile, 0, SEEK_SET);
+
+    while (fread(&buffer, 1, 1, inputFile)) {
+        if (ftell(inputFile) == ftell(inputFile) - 1) { // Verifica se é o último byte
+            bufferLen = lastByteBits;
+        }
+
+        for (int i = 7; i >= (8 - bufferLen); --i) {
             int bit = (buffer >> i) & 1;
 
             if (bit == 0)
@@ -127,8 +129,7 @@ void decompressFile(const char *inputFileName, const char *outputFileName, Huffm
             else
                 currentNode = getRight(currentNode);
 
-            if (isLeaf(currentNode))
-            {
+            if (isLeaf(currentNode)) {
                 fputc(getCharacter(currentNode), outputFile);
                 currentNode = root;
             }

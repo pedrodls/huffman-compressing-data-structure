@@ -1,1 +1,1 @@
-exemplo de texto para compressão e descompressão usando Huffman dependendo do contexto em causa
+exemplo de texto para compresso e
