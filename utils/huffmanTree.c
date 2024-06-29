@@ -45,35 +45,21 @@ char getCharacter(HuffmanNode *node){
 }
 
 // Função para construir a árvore de Huffman
-HuffmanNode* buildHuffmanTree(char* data, int* freq, int size) {
-
+HuffmanNode* buildHuffmanTree(char data[], int freq[], int size) {
     HuffmanNode *left, *right, *top;
+    MinHeap* minHeap = createAndBuildMinHeap(data, freq, size);
 
-    // Cria uma fila de prioridade (heap mínimo) com capacidade igual ao número de caracteres únicos
-    MinHeap* minHeap = createMinHeap(size);
-
-    // Insere todos os caracteres no heap mínimo
-    for (int i = 0; i < size; ++i)
-        insertMinHeap(minHeap, createNode(data[i], freq[i]));
-
-    // Itera enquanto o tamanho do heap não for igual a 1
-    while (getSize(minHeap) != 1) {
-        // Extrai os dois nós de menor frequência do heap mínimo
+    while (!isSizeOne(minHeap)) {
         left = extractMin(minHeap);
         right = extractMin(minHeap);
 
-        // Cria um novo nó com a soma das frequências dos dois nós extraídos
         top = createNode('$', left->frequency + right->frequency);
         top->left = left;
         top->right = right;
 
-        // Insere o novo nó no heap mínimo
         insertMinHeap(minHeap, top);
     }
 
-
-
-    // O nó restante no heap é a raiz da árvore de Huffman
     return extractMin(minHeap);
 }
 
@@ -84,7 +70,6 @@ int isLeaf(HuffmanNode* root) {
 
 // Função para armazenar os códigos de Huffman em um array
 void storeCodes(HuffmanNode* root, int arr[], int top, int** codes, int* lengths) {
-
     if (root->left) {
         arr[top] = 0;
         storeCodes(root->left, arr, top + 1, codes, lengths);
@@ -126,8 +111,8 @@ void printCodes(HuffmanNode* root, int* arr, int top) {
     }
 }
 
-//Função Principal para Construir e Obter os Códigos de Huffman
-void huffmanCodes(char data[], int freq[], int size, int** codes, int* lengths) {
+// Função principal para construir a árvore de Huffman e gerar os códigos
+void HuffmanCodes(char data[], int freq[], int size, int** codes, int* lengths) {
     HuffmanNode* root = buildHuffmanTree(data, freq, size);
     int arr[SIZE_CHAR], top = 0;
     storeCodes(root, arr, top, codes, lengths);

@@ -5,19 +5,15 @@
 
 #define MAX_CHAR 256 // Definindo o número máximo de caracteres possíveis (ASCII)
 
-/* void getFrequency(char *str, int freq[])
-{
-    // Inicializando o array de frequências com 0
-    for (int i = 0; i < MAX_CHAR; i++)
-        freq[i] = 0;
-
-    // Percorrendo a string e contando a frequência de cada caractere
-    for (int i = 0; str[i] != '\0'; i++)
-        freq[(unsigned char)str[i]]++;
-        
-} */
-
-//Função para comprimir o ficheiro
+// Função para liberar a memória alocada para a árvore de Huffman
+void freeHuffmanTree(HuffmanNode* root) {
+    if (root) {
+        freeHuffmanTree(getLeft(root));
+        freeHuffmanTree(getRight(root));
+        free(root);
+    }
+}
+// Função para comprimir o arquivo de entrada usando os códigos de Huffman
 void compressFile(const char* inputFileName, const char* outputFileName, int** codes, int* lengths) {
     FILE* inputFile = fopen(inputFileName, "r");
     FILE* outputFile = fopen(outputFileName, "wb");
@@ -49,15 +45,12 @@ void compressFile(const char* inputFileName, const char* outputFileName, int** c
         fwrite(&buffer, 1, 1, outputFile);
     }
 
-
-
     fclose(inputFile);
     fclose(outputFile);
 }
 
-//Ficheiro para descompressão do ficheiro
+// Função para descomprimir o arquivo comprimido usando a árvore de Huffman
 void decompressFile(const char* inputFileName, const char* outputFileName, HuffmanNode* root) {
-
     FILE* inputFile = fopen(inputFileName, "rb");
     FILE* outputFile = fopen(outputFileName, "w");
 
@@ -67,10 +60,8 @@ void decompressFile(const char* inputFileName, const char* outputFileName, Huffm
     }
 
     HuffmanNode* currentNode = root;
-
     int bit;
     unsigned char buffer;
-
     while (fread(&buffer, 1, 1, inputFile)) {
         for (int i = 7; i >= 0; --i) {
             bit = (buffer >> i) & 1;
