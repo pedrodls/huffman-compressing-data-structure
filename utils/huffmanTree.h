@@ -8,6 +8,15 @@ HuffmanNode *createNode(char character, int frequency);
 // Função para pegar a frequência
 int getFrequency(HuffmanNode *node);
 
+// Função para pegar o filho à esquerda
+HuffmanNode *getLeft(HuffmanNode *node);
+
+// Função para pegar filho à direita
+HuffmanNode *getRight(HuffmanNode *node);
+
+// Função para pegar o caracter
+char getCharacter(HuffmanNode *node);
+
 // Função para construir a árvore de Huffman
 HuffmanNode *buildHuffmanTree(char *data, int *freq, int size);
 
@@ -15,4 +24,4 @@ HuffmanNode *buildHuffmanTree(char *data, int *freq, int size);
 void printCodes(HuffmanNode *root, int *arr, int top);
 
 // Função para pegar os códigos binários
-void HuffmanCodes(char *data, int *freq, int size);
+void HuffmanCodes(char data[], int freq[], int size, int **codes, int *lengths);
