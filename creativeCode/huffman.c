@@ -32,49 +32,46 @@ HuffmanList *initList(HuffmanList *list)
 // Função para inicializar no
 HuffmanNode *initNewHuffmanNode()
 {
-    return malloc(sizeof(HuffmanNode));
+
+    return (HuffmanNode *)malloc(sizeof(HuffmanNode *));
+    ;
 }
 
 // Função para inserir na lista de forma ordenada
 void insertInOrderList(HuffmanList *list, HuffmanNode *node)
 {
 
-    HuffmanNode *aux;
+    HuffmanNode *aux = list->node;
 
-    if (!list->node)
+    if (aux == NULL || aux->frequency > node->frequency)
     {
-        list->node = node;
-    }
-    else if (list->node->frequency > node->frequency)
-    {
-        node->next = list->node;
-        list->node = node;
-    }
-    else
-    {
-        aux = list->node;
-
-        while (aux->next && aux->next->frequency <= node->frequency)
-            aux = aux->next;
-
         node->next = aux->next;
-        aux->next = node;
+        list->node = node;
+        list->size++;
+        return;
     }
+
+    while (aux->next && aux->next->frequency <= node->frequency)
+    {
+        printf("%c - %d\n", aux->character, aux->frequency);
+        aux = aux->next;
+    }
+
+    node->next = aux->next;
+    aux->next = node;
 
     list->size++;
 }
 
 // Função para inserir os dados provienientes da tabela de frequência
-void fillList(unsigned int freq[], HuffmanList *list)
+void fillList(int freq[], HuffmanList *list)
 {
-
-    HuffmanNode *newNode;
 
     for (int i = 0; i < CHAR_SIZE; i++)
     {
         if (freq[i] > 0)
         {
-            newNode = initNewHuffmanNode();
+            HuffmanNode *newNode = initNewHuffmanNode();
 
             if (newNode)
             {
@@ -87,8 +84,10 @@ void fillList(unsigned int freq[], HuffmanList *list)
                 insertInOrderList(list, newNode);
             }
             else
+            {
                 printf("\nErro ao alocar memória: fillList()!\n");
-            break;
+                break;
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ HuffmanNode *initNewHuffmanNode();
 void insertInOrderList(HuffmanList *list, HuffmanNode *node);
 
 // Função para inserir os dados provienientes da tabela de frequência
-void fillList(unsigned int freq[], HuffmanList *list);
+void fillList(int freq[], HuffmanList *list);
 
 // Função para imprimir a lista
 void printList(HuffmanList *list);

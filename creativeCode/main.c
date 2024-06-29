@@ -5,9 +5,9 @@
 #include "utils.h"
 
 // Nomes dos arquivos
-const char *inputFileName = "input.txt";
-const char *outputFileName = "output.txt";
-const char *compressedFileName = "compressed.bin";
+const char *inputFileName = "./input.txt";
+const char *outputFileName = "./output.txt";
+const char *compressedFileName = "./compressed.bin";
 
 int main()
 {
@@ -25,13 +25,21 @@ int main()
 
     //------------------Criar a lista ordenada de elementos------------------//
 
+ /*   for (int i = 0; i < CHAR_SIZE; i++)
+    {
+        if (freq[i] > 0)
+        {
+            printf("%c - %d \n", i, freq[i]);
+        }
+    } */
+
     HuffmanList *myList;
 
     initList(myList);
 
     fillList(freq, myList);
 
-    printList(myList);
+    //printList(myList);
 
     return 0;
 }

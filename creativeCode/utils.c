@@ -1,10 +1,12 @@
+#include <wchar.h>
+#include <locale.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "./utils.h"
 
 // Definindo o número máximo de caracteres possíveis (ASCII)
-#define CHAR_SIZE 256 
+#define CHAR_SIZE 256
 
 // Função para preencher o array de dados com caracteres únicos do texto
 void fillFrequencieArray(char data[], int freq[], int dataSize)
@@ -23,6 +25,7 @@ void fillFrequencieArray(char data[], int freq[], int dataSize)
 void calculateFrequencies(const char *inputFileName, int freq[])
 {
 
+    setlocale(LC_ALL, "Portuguese");
     // Inicializar o array de frequências
     for (int i = 0; i < 256; i++)
     {
