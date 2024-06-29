@@ -1,0 +1,3 @@
+C:/Users/Juciline Gabriel/Documents/Exame_ED2/Comprimir_Descomprimir/cmake-build-debug/CMakeFiles/Comprimir_Descomprimir.dir
+C:/Users/Juciline Gabriel/Documents/Exame_ED2/Comprimir_Descomprimir/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Juciline Gabriel/Documents/Exame_ED2/Comprimir_Descomprimir/cmake-build-debug/CMakeFiles/rebuild_cache.dir
