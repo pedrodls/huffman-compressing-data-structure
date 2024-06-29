@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "./minHeap.h"
+#include "minHeap.h"
 
 struct minHeap {
     int size;
@@ -61,5 +62,9 @@ HuffmanNode* extractMin(MinHeap* minHeap) {
     return temp;
 }
 
+
 //Função para pegar o size
-int getSize(MinHeap * minHeap);
+int getSize(MinHeap *minHeap)
+{
+    return minHeap->size;
+}

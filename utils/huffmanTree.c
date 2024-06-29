@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "./minHeap.h"
 
+#define SIZE_CHAR 256
 // Estrutura do nó da árvore de Huffman
 typedef struct huffmanNode
 {
@@ -30,6 +31,7 @@ int getFrequency(HuffmanNode *node){
 
 // Função para construir a árvore de Huffman
 HuffmanNode* buildHuffmanTree(char* data, int* freq, int size) {
+
     HuffmanNode *left, *right, *top;
 
     // Cria uma fila de prioridade (heap mínimo) com capacidade igual ao número de caracteres únicos
@@ -54,8 +56,35 @@ HuffmanNode* buildHuffmanTree(char* data, int* freq, int size) {
         insertMinHeap(minHeap, top);
     }
 
+
     // O nó restante no heap é a raiz da árvore de Huffman
     return extractMin(minHeap);
+}
+
+// Função para verificar se um nó é uma folha
+int isLeaf(HuffmanNode* root) {
+    return !(root->left) && !(root->right);
+}
+
+// Função para armazenar os códigos de Huffman em um array
+void storeCodes(HuffmanNode* root, int arr[], int top, int** codes, int* lengths) {
+
+    if (root->left) {
+        arr[top] = 0;
+        storeCodes(root->left, arr, top + 1, codes, lengths);
+    }
+
+    if (root->right) {
+        arr[top] = 1;
+        storeCodes(root->right, arr, top + 1, codes, lengths);
+    }
+
+    if (isLeaf(root)) {
+        codes[root->character] = (int*)malloc(top * sizeof(int));
+        lengths[root->character] = top;
+        for (int i = 0; i < top; ++i)
+            codes[root->character][i] = arr[i];
+    }
 }
 
 //Função para imprimir os códigos dos caracteres
@@ -86,8 +115,9 @@ void HuffmanCodes(char* data, int* freq, int size) {
     // Constroi a árvore de Huffman
     HuffmanNode* root = buildHuffmanTree(data, freq, size);
 
+
     // Array para armazenar os códigos de Huffman
-    int arr[100], top = 0;
+    int arr[SIZE_CHAR], top = 0;
 
     // Gera e imprime os códigos de Huffman
     printCodes(root, arr, top);

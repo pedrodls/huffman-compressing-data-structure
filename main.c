@@ -9,7 +9,11 @@ int main() {
 
     int size = sizeof(arr) / sizeof(arr[0]);
 
+    printf("Generating Huffman Codes...\n");
+    
     HuffmanCodes(arr, freq, size);
+
+    printf("Finished.\n");
 
     return 0;
 }
