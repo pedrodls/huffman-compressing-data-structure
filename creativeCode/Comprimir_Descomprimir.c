@@ -45,28 +45,28 @@ void createList(list *list)
     list->tam = 0;
 }
 
-void insertInOrder(list *list, node *nodede)
+void insertInOrder(list *list, node *newNode)
 {
     node *aux = NULL;
 
     if (list->start == NULL)
     {
-        list->start = nodede;
+        list->start = newNode;
     }
-    else if (nodede->freq < list->start->freq)
+    else if (newNode->freq < list->start->freq)
     {
-        nodede->next = list->start;
-        list->start = nodede;
+        newNode->next = list->start;
+        list->start = newNode;
     }
     else
     {
         aux = list->start;
-        while (aux->next && aux->next->freq <= nodede->freq)
+        while (aux->next && aux->next->freq <= newNode->freq)
         {
             aux = aux->next;
         }
-        nodede->next = aux->next;
-        aux->next = nodede;
+        newNode->next = aux->next;
+        aux->next = newNode;
     }
 
     list->tam++;
@@ -244,9 +244,8 @@ void generateDictionary(char **dictionary, node *centralNode, char *way, int col
  */
 void printDictionary(char **dictionary)
 {
-    int i;
     printf("\t\nDicionário:\n");
-    for (i = 0; i < TAM; i++)
+    for (int i = 0; i < TAM; i++)
     {
         if (strlen(dictionary[i]) > 0)
             printf("\t%3d: %s\n", i, dictionary[i]);
@@ -318,13 +317,13 @@ char *decode(unsigned char strData[], node *centralNode)
 /*--------------------- PARTE 7: Compactar----------------------------------*/
 void compact(unsigned char str[])
 {
-    FILE *arquivo = fopen("./compactado.wg", "wb");
+    FILE *file = fopen("./compressed/compacted.wg", "wb");
 
     int i = 0, j = 7;
-    
+
     unsigned char mascara, byte = 0;
 
-    if (arquivo)
+    if (file)
     {
         while (str[i] != '\0')
         {
@@ -338,7 +337,7 @@ void compact(unsigned char str[])
 
             if (j < 0)
             { // Tem um byte formado
-                fwrite(&byte, sizeof(unsigned char), 1, arquivo);
+                fwrite(&byte, sizeof(unsigned char), 1, file);
                 byte = 0;
                 j = 7;
             }
@@ -347,14 +346,14 @@ void compact(unsigned char str[])
 
         if (j != 7)
         {
-            fwrite(&byte, sizeof(unsigned char), 1, arquivo);
+            fwrite(&byte, sizeof(unsigned char), 1, file);
         }
 
-        fclose(arquivo);
+        fclose(file);
     }
     else
     {
-        printf("\nErro ao Abrir/Criar arquivo em compact\n");
+        printf("\nErro ao Abrir/Criar file em compact\n");
     }
 }
 
@@ -367,14 +366,14 @@ unsigned int verifyBit(unsigned char byte, int i)
 
 void uncompact(node *centralNode)
 {
-    FILE *arquivo = fopen("./compactado.wg", "rb");
+    FILE *file = fopen("./compressed/compacted.wg", "rb");
     node *aux = centralNode;
     unsigned char byte;
     int i;
 
-    if (arquivo)
+    if (file)
     {
-        while (fread(&byte, sizeof(unsigned char), 1, arquivo))
+        while (fread(&byte, sizeof(unsigned char), 1, file))
         {
             for (i = 7; i >= 0; i--)
             {
@@ -393,11 +392,11 @@ void uncompact(node *centralNode)
                 }
             }
         }
-        fclose(arquivo);
+        fclose(file);
     }
     else
     {
-        printf("\nErro ao Abrir arquivo em descompactar\n");
+        printf("\nErro ao Abrir file em descompactar\n");
     }
 }
 
@@ -417,7 +416,7 @@ int findSize()
     }
     else
     {
-        printf("\nErro ao Abrir arquivo em findSize\n");
+        printf("\nErro ao Abrir file em findSize\n");
     }
     return tam;
 }
@@ -443,6 +442,74 @@ void readText(unsigned char *strData)
     }
     else
     {
-        printf("\nErro ao Abrir arquivo em readText\n");
+        printf("\nErro ao Abrir file em readText\n");
     }
+}
+
+void readEncodedText(unsigned char *strData)
+{
+    FILE *arq = fopen("./input.txt", "r");
+    char letra;
+    int i = 0;
+
+    if (arq)
+    {
+        while (!feof(arq))
+        {
+            letra = fgetc(arq);
+            if (letra != -1)
+            {
+                strData[i] = letra;
+                i++;
+            }
+        }
+        fclose(arq);
+    }
+    else
+    {
+        printf("\nErro ao Abrir file em readText\n");
+    }
+}
+
+// Função para salvar a tabela de frequencia em um arquivo
+void saveTable(unsigned int tab[])
+{
+    FILE *file = fopen("./compressed/.temp.txt", "w");
+
+    if (file == NULL)
+    {
+        perror("Erro ao abrir o arquivo para escrita");
+        return;
+    }
+
+    for (int i = 0; i < TAM; i++)
+    {
+        if (tab[i] > 0)
+        {
+            fprintf(file, "%d - %d\n", i, tab[i]);
+        }
+    }
+
+    fclose(file);
+}
+
+// Função para ler o dicionário de um arquivo
+void readTable(unsigned int tab[])
+{
+
+    FILE *file = fopen("./compressed/.temp.txt", "r");
+
+    if (file == NULL)
+    {
+        perror("Erro ao abrir o arquivo para leitura");
+        return;
+    }
+
+    int key;
+    int freq;
+
+    while (fscanf(file, "%d - %d\n", &key, &freq) != EOF)
+        tab[key] = freq;
+
+    fclose(file);
 }

@@ -67,3 +67,9 @@ void uncompact(node *centralNode);
  */
 int findSize();
 void readText(unsigned char *strData);
+
+// Função para salvar a tabela de frequencia em um arquivo
+void saveTable(unsigned int tab[]);
+
+// Função para ler o dicionário de um arquivo
+void readTable(unsigned int tab[]);

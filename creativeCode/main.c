@@ -8,9 +8,13 @@ int main()
 {
     void encodeFromMain();
 
+    void decocodeFromMain();
+
     SetConsoleOutputCP(65001);
 
     encodeFromMain();
+
+    decocodeFromMain();
 
     return 0;
 }
@@ -19,7 +23,7 @@ void encodeFromMain()
 {
 
     unsigned char *strData;
-    unsigned int tabela_frequencia[TAM];
+    unsigned int freqTable[TAM];
     list myList;
     node *huffmanTree;
     int columns, tam;
@@ -31,7 +35,7 @@ void encodeFromMain()
     */
 
     tam = findSize();
-    printf("\nQuantidade: %d\n", tam);
+    // printf("\nQuantidade: %d\n", tam);
 
     strData = calloc(tam * 2, sizeof(unsigned char));
     readText(strData);
@@ -39,26 +43,26 @@ void encodeFromMain()
 
     /*--------------------- PARTE 1: TABELA DE FREQUNCIA----------------------*/
 
-    initTable(tabela_frequencia);
-    fillFreqTable(strData, tabela_frequencia);
-    // printFreqTable(tabela_frequencia);
+    initTable(freqTable);
+    fillFreqTable(strData, freqTable);
+    // printFreqTable(freqTable);
 
     /*--------------------- PARTE 2: myListA ENCADEADA ORDENADA-------------------*/
 
     createList(&myList);
-    fillList(tabela_frequencia, &myList);
+    fillList(freqTable, &myList);
     // printList(&myList);
 
     /*--------------------- PARTE 3: Montar árvore de  Huffman -----------------*/
     huffmanTree = mountHuffmanTree(&myList);
-    printf("Árvore de Ruffman\n");
-    //printHuffmanTree(huffmanTree, 0);
+    // printf("Árvore de Ruffman\n");
+    //  printHuffmanTree(huffmanTree, 0);
 
     /*--------------------- PARTE 4: Montar o Dicionário ------------------------*/
     columns = huffmanTreeHeight(huffmanTree) + 1;
     dictionary = allocateDictionary(columns);
     generateDictionary(dictionary, huffmanTree, "", columns);
-    //printDictionary(dictionary);
+    // printDictionary(dictionary);
 
     /*--------------------- PARTE 5: Codificar ----------------------------------*/
     codificado = encode(dictionary, strData);
@@ -66,17 +70,43 @@ void encodeFromMain()
 
     /*--------------------- PARTE 6: Decodificar ----------------------------------*/
     descodificado = decode(codificado, huffmanTree);
-    printf("\n\tTexto descodificado: %s\n", descodificado);
+    printf("\n\tTexto original: %s\n", descodificado);
 
     /*--------------------- PARTE 7: Compactar----------------------------------*/
-    compact(codificado);
+    printf("\nARQUIVO COMPACTADO!\n");
 
-    /*--------------------- PARTE 8: Descompactar----------------------------------*/
-    printf("\nARQUIVO DESCOMPACTADO!\n");
-    uncompact(huffmanTree);
-    printf("\n\n");
+    saveTable(freqTable);
+
+    compact(codificado);
 
     free(strData);
     free(codificado);
     free(descodificado);
+}
+
+void decocodeFromMain()
+{
+
+    /*--------------------- PARTE 1: TABELA DE FREQUNCIA----------------------*/
+
+    unsigned int freqTable[TAM];
+    list myList;
+    node *huffmanTree;
+
+    initTable(freqTable);
+
+    readTable(freqTable);
+
+    /*--------------------- PARTE 2: myListA ENCADEADA ORDENADA-------------------*/
+
+    createList(&myList);
+    fillList(freqTable, &myList);
+    // printList(&myList);
+
+    /*--------------------- PARTE 3: Montar árvore de  Huffman -----------------*/
+    huffmanTree = mountHuffmanTree(&myList);
+    //printf("Árvore de Ruffman\n");
+    // printHuffmanTree(huffmanTree, 0);
+
+    uncompact(huffmanTree);
 }

@@ -60,7 +60,8 @@
     "utils.h": "c",
     "stdlib.h": "c",
     "minheap.h": "c",
-    "comprimir_descomprimir.h": "c"
+    "comprimir_descomprimir.h": "c",
+    "type_traits": "c"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }
