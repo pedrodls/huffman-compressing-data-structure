@@ -349,6 +349,8 @@ void compact(unsigned char str[])
             fwrite(&byte, sizeof(unsigned char), 1, file);
         }
 
+        printf("\nARQUIVO COMPACTADO COM SUCESSO!\n");
+
         fclose(file);
     }
     else
@@ -373,6 +375,11 @@ void uncompact(node *centralNode)
 
     if (file)
     {
+
+        printf("\nARQUIVO DESCOMPACTADO COM SUCESSO!\n\n");
+
+        printf("\tTexto original: ");
+
         while (fread(&byte, sizeof(unsigned char), 1, file))
         {
             for (i = 7; i >= 0; i--)
@@ -392,6 +399,8 @@ void uncompact(node *centralNode)
                 }
             }
         }
+        printf("\n\n");
+
         fclose(file);
     }
     else
@@ -486,7 +495,7 @@ void saveTable(unsigned int tab[])
     {
         if (tab[i] > 0)
         {
-            fprintf(file, "%d - %d\n", i, tab[i]);
+            fprintf(file, "%d-%d\n", i, tab[i]);
         }
     }
 
@@ -508,7 +517,7 @@ void readTable(unsigned int tab[])
     int key;
     int freq;
 
-    while (fscanf(file, "%d - %d\n", &key, &freq) != EOF)
+    while (fscanf(file, "%d-%d\n", &key, &freq) != EOF)
         tab[key] = freq;
 
     fclose(file);

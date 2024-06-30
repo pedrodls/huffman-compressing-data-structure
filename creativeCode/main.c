@@ -16,6 +16,8 @@ int main()
 
     decocodeFromMain();
 
+    
+
     return 0;
 }
 
@@ -73,11 +75,11 @@ void encodeFromMain()
     printf("\n\tTexto original: %s\n", descodificado);
 
     /*--------------------- PARTE 7: Compactar----------------------------------*/
-    printf("\nARQUIVO COMPACTADO!\n");
 
     saveTable(freqTable);
 
     compact(codificado);
+
 
     free(strData);
     free(codificado);
@@ -101,12 +103,11 @@ void decocodeFromMain()
 
     createList(&myList);
     fillList(freqTable, &myList);
-    // printList(&myList);
 
     /*--------------------- PARTE 3: Montar árvore de  Huffman -----------------*/
     huffmanTree = mountHuffmanTree(&myList);
-    //printf("Árvore de Ruffman\n");
-    // printHuffmanTree(huffmanTree, 0);
 
     uncompact(huffmanTree);
+
+
 }
