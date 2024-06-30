@@ -1,0 +1,18 @@
+#Rodar no terminal:
+
+1 - Pasta(creativeCode) contém o código usando lista encadeada
+2 - Pasta(default) contém o código usando estrutura heap
+
+#Escolha a pasta por meio do terminal:
+*Ex: cd creativeCode || cd default*
+
+#Compilação para o creativeCode:
+gcc -c main.c .\Comprimir_Descomprimir.c
+
+#Gerar objectos:
+gcc -o main main.c Comprimir_Descomprimir.c
+
+#Rodar:
+./main.exe
+
+
