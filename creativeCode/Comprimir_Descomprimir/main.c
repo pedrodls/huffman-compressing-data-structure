@@ -15,8 +15,8 @@ int main() {
     char **dicionario;
     char *codificado, *descodificado;
 
-    /*Para Alterar a formação de texto do prompt de comando(CMD)
-    para aceitar a acentuação.
+    /*Para Alterar a formataÃ§Ã£o de texto do prompt de comando(CMD)
+    para aceitar a acentuaï¿½ï¿½o.
     */
     SetConsoleOutputCP(65001);
 
@@ -27,7 +27,7 @@ int main() {
     ler_texto(texto);
     //printf("\nTEXTO:\n%s\n", texto);
 
-    /*--------------------- PARTE 1: TABELA DE FREQUÊNCIA----------------------*/
+    /*--------------------- PARTE 1: TABELA DE FREQUï¿½NCIA----------------------*/
 
     inicializar_tabela(tabela_frequencia);
     preencher_tab_frequencia(texto, tabela_frequencia);
@@ -39,12 +39,12 @@ int main() {
     preencher_lista(tabela_frequencia, &lista);
     //imprimir_lista(&lista);
 
-    /*--------------------- PARTE 3: Montar Árvore de  Huffman -----------------*/
+    /*--------------------- PARTE 3: Montar ï¿½rvore de  Huffman -----------------*/
     arvore = montar_arvore(&lista);
     printf("Arvore de Ruffman\n");
     imprimir_arvore(arvore, 0);
 
-    /*--------------------- PARTE 4: Montar o Dicionário ------------------------*/
+    /*--------------------- PARTE 4: Montar o Dicionï¿½rio ------------------------*/
     colunas = altura_arvore(arvore) + 1;
     dicionario = aloca_dicionario(colunas);
     gerar_dicionario(dicionario, arvore, "", colunas);

@@ -6,14 +6,17 @@
 // Função para calcular as frequências dos caracteres em um arquivo
 void calculateFrequencies(const char *inputFileName, int freq[]);
 
-//Função para preencher o array de dados com caracteres únicos do texto
-void fillFrequencieArray(char data[], int freq[], int dataSize);
+//Função para pegar o tamanho do ficheiro
+int getFileSize();
 
-// Função para liberar a memória alocada para a árvore de Huffman
-void freeHuffmanTree(HuffmanNode *root);
+//Função para pegar o texto do ficheiro
+void readFileText(unsigned char *data);
 
-// Função para comprimir o ficheiro
-void compressFile(const char *inputFileName, const char *outputFileName, int **codes, int *lengths);
+//Função para inicializar a tabela de frequência
+void initFrequencyTab(unsigned int tab[]);
 
-// Ficheiro para descompressão do ficheiro
-void decompressFile(const char *inputFileName, const char *outputFileName, HuffmanNode *root);
+//Função para preencher a tabela de frequência
+void fillFrequencyTab(unsigned char data[], unsigned int tab[]);
+
+//Função para imprimir a tabela de frequência
+void printTabFrequency(unsigned int tab[]);
