@@ -1,1 +1,1 @@
-Se file.wg for mencionado em um contexto de servidor especifico, ele pode ser um arquivo de configuracao, log, ou qualquer outro tipo de arquivo necessário para o funcionamento desse servidor. Neste caso, voce precisaria verificar a documentacao do servidor ou aplicacao especifica para entender a funcao do arquivo.
+vamos aprender programação!

@@ -4,15 +4,19 @@
 #include <windows.h> // Para SetConsoleOutput
 #define TAM 256
 
-
-void encodeFromMain(){
-
-}
-
 int main()
 {
+    void encodeFromMain();
 
     SetConsoleOutputCP(65001);
+
+    encodeFromMain();
+
+    return 0;
+}
+
+void encodeFromMain()
+{
 
     unsigned char *strData;
     unsigned int tabela_frequencia[TAM];
@@ -31,30 +35,30 @@ int main()
 
     strData = calloc(tam * 2, sizeof(unsigned char));
     readText(strData);
-    //printf("\nTEXTO:\n%s\n", strData);
+    // printf("\nTEXTO:\n%s\n", strData);
 
     /*--------------------- PARTE 1: TABELA DE FREQUNCIA----------------------*/
 
     initTable(tabela_frequencia);
     fillFreqTable(strData, tabela_frequencia);
-    //printFreqTable(tabela_frequencia);
+    // printFreqTable(tabela_frequencia);
 
     /*--------------------- PARTE 2: myListA ENCADEADA ORDENADA-------------------*/
 
     createList(&myList);
     fillList(tabela_frequencia, &myList);
-    //printList(&myList);
+    // printList(&myList);
 
     /*--------------------- PARTE 3: Montar árvore de  Huffman -----------------*/
     huffmanTree = mountHuffmanTree(&myList);
     printf("Árvore de Ruffman\n");
-    printHuffmanTree(huffmanTree, 0);
+    //printHuffmanTree(huffmanTree, 0);
 
     /*--------------------- PARTE 4: Montar o Dicionário ------------------------*/
     columns = huffmanTreeHeight(huffmanTree) + 1;
     dictionary = allocateDictionary(columns);
     generateDictionary(dictionary, huffmanTree, "", columns);
-    printDictionary(dictionary);
+    //printDictionary(dictionary);
 
     /*--------------------- PARTE 5: Codificar ----------------------------------*/
     codificado = encode(dictionary, strData);
@@ -75,6 +79,4 @@ int main()
     free(strData);
     free(codificado);
     free(descodificado);
-
-    return 0;
 }
