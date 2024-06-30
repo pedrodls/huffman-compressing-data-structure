@@ -86,7 +86,7 @@ void encodeFromMain()
 
     initTable(freqTable);
     fillFreqTable(strData, freqTable);
-    // printFreqTable(freqTable);
+    //printFreqTable(freqTable);
 
     /*--------------------- PARTE 2: myListA ENCADEADA ORDENADA-------------------*/
 
