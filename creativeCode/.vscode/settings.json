@@ -59,7 +59,8 @@
   "files.associations": {
     "utils.h": "c",
     "stdlib.h": "c",
-    "minheap.h": "c"
+    "minheap.h": "c",
+    "comprimir_descomprimir.h": "c"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }

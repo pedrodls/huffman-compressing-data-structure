@@ -59,6 +59,7 @@
   "files.associations": {
     "huffmantree.h": "c",
     "minheap.h": "c",
-    "utils.h": "c"
+    "utils.h": "c",
+    "comprimir_descomprimir.h": "c"
   }
 }

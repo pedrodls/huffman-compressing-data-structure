@@ -4,40 +4,43 @@
 #include <windows.h> // Para SetConsoleOutput
 #define TAM 256
 
+int main()
+{
 
-int main() {
+    SetConsoleOutputCP(65001);
 
     unsigned char *texto;
     unsigned int tabela_frequencia[TAM];
     Lista lista;
     No *arvore;
-    int colunas,tam;
+    int colunas, tam;
     char **dicionario;
     char *codificado, *descodificado;
 
     /*Para Alterar a formatação de texto do prompt de comando(CMD)
     para aceitar a acentua��o.
     */
-    SetConsoleOutputCP(65001);
 
     tam = descobrir_tamanho();
     printf("\nQuantidade: %d\n", tam);
 
     texto = calloc(tam * 2, sizeof(unsigned char));
     ler_texto(texto);
-    //printf("\nTEXTO:\n%s\n", texto);
+    printf("\nTEXTO:\n%s\n", texto);
 
-    /*--------------------- PARTE 1: TABELA DE FREQU�NCIA----------------------*/
+    /*--------------------- PARTE 1: TABELA DE FREQUNCIA----------------------*/
 
     inicializar_tabela(tabela_frequencia);
     preencher_tab_frequencia(texto, tabela_frequencia);
-    //imprimir_tab_frequencia(tabela_frequencia);
+    imprimir_tab_frequencia(tabela_frequencia);
+    return 0;
 
     /*--------------------- PARTE 2: LISTA ENCADEADA ORDENADA-------------------*/
 
     criar_lista(&lista);
     preencher_lista(tabela_frequencia, &lista);
-    //imprimir_lista(&lista);
+    imprimir_lista(&lista);
+    return 0;
 
     /*--------------------- PARTE 3: Montar �rvore de  Huffman -----------------*/
     arvore = montar_arvore(&lista);

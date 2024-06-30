@@ -1,80 +1,80 @@
-#include <wchar.h>
-#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "utils.h"
+#include "Comprimir_Descomprimir.h"
 #include <windows.h> // Para SetConsoleOutput
-
-// Nomes dos arquivos
-const char *inputFileName = "./input.txt";
+#define TAM 256
 
 
-
-void toCompact() {
+void encodeFromMain(){
 
 }
 
 int main()
 {
 
-    /*--------------------- PARTE 1: TABELA DE FREQUêNCIA ----------------------*/
+    SetConsoleOutputCP(65001);
 
-    int freq[CHAR_SIZE];
-    int fileSize = getFileSize();
-    unsigned char *data = calloc(fileSize * 2, sizeof(unsigned char));
+    unsigned char *strData;
+    unsigned int tabela_frequencia[TAM];
+    list myList;
+    node *huffmanTree;
+    int columns, tam;
+    char **dictionary;
+    char *codificado, *descodificado;
 
-    // Preenche o array de dados com caracteres únicos do texto
-    readFileText(data);
+    /*Para Alterar a formatação de strData do prompt de comando(CMD)
+    para aceitar a acentua��o.
+    */
 
-    initFrequencyTab(freq);
-    fillFrequencyTab(data, freq);
+    tam = findSize();
+    printf("\nQuantidade: %d\n", tam);
 
-    //printTabFrequency(freq);
+    strData = calloc(tam * 2, sizeof(unsigned char));
+    readText(strData);
+    //printf("\nTEXTO:\n%s\n", strData);
 
-    /*--------------------- PARTE 2: LISTA ENCADEADA ORDENADA -------------------*/
+    /*--------------------- PARTE 1: TABELA DE FREQUNCIA----------------------*/
 
-    HuffmanList *myList = (HuffmanList *)malloc(sizeof(HuffmanList *));
+    initTable(tabela_frequencia);
+    fillFreqTable(strData, tabela_frequencia);
+    //printFreqTable(tabela_frequencia);
 
-    initList(myList);
+    /*--------------------- PARTE 2: myListA ENCADEADA ORDENADA-------------------*/
 
-    fillList(freq, myList);
-
-    //printList(myList);
+    createList(&myList);
+    fillList(tabela_frequencia, &myList);
+    //printList(&myList);
 
     /*--------------------- PARTE 3: Montar árvore de  Huffman -----------------*/
-
-    HuffmanNode *huffmanTree = buildHuffmanTree(myList);
-    //printf("Arvore de Ruffman\n");
-    //printHuffmanTree(huffmanTree, 0);
-
+    huffmanTree = mountHuffmanTree(&myList);
+    printf("Árvore de Ruffman\n");
+    printHuffmanTree(huffmanTree, 0);
 
     /*--------------------- PARTE 4: Montar o Dicionário ------------------------*/
-    int columns = heightOfHuffmanTree(huffmanTree) + 1;
-    char **dictionary = allocateDictionary(columns);
-
+    columns = huffmanTreeHeight(huffmanTree) + 1;
+    dictionary = allocateDictionary(columns);
     generateDictionary(dictionary, huffmanTree, "", columns);
-    //printDictionary(dictionary);
+    printDictionary(dictionary);
 
-
-    /*--------------------- PARTE 5: Codificando ------------------------*/
-    char *encodedData = encodeString(dictionary, data);
-    printf("\n\tTexto codificado: %s\n", encodedData);
-
+    /*--------------------- PARTE 5: Codificar ----------------------------------*/
+    codificado = encode(dictionary, strData);
+    printf("\n\tTexto codificado: %s\n", codificado);
 
     /*--------------------- PARTE 6: Decodificar ----------------------------------*/
-    char *decodedData = decodedString(encodedData, huffmanTree);
-    printf("\n\tTexto descodificado: %s\n", decodedData);
+    descodificado = decode(codificado, huffmanTree);
+    printf("\n\tTexto descodificado: %s\n", descodificado);
 
     /*--------------------- PARTE 7: Compactar----------------------------------*/
-    compact(encodedData);
+    compact(codificado);
 
     /*--------------------- PARTE 8: Descompactar----------------------------------*/
-
-    decompact(huffmanTree);
+    printf("\nARQUIVO DESCOMPACTADO!\n");
+    uncompact(huffmanTree);
     printf("\n\n");
 
-    free(encodedData);
-    free(decodedData);
+    free(strData);
+    free(codificado);
+    free(descodificado);
 
     return 0;
 }

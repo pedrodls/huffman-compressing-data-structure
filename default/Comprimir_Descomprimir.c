@@ -319,8 +319,10 @@ char *descodificar(unsigned char texto[], No *raiz)
 /*--------------------- PARTE 7: Compactar----------------------------------*/
 void compactar(unsigned char str[])
 {
-    FILE *arquivo = fopen("compactado.wg", "wb");
+    FILE *arquivo = fopen("./compactado.wg", "wb");
+
     int i = 0, j = 7;
+    
     unsigned char mascara, byte = 0;
 
     if (arquivo)
@@ -366,7 +368,7 @@ unsigned int verificar_bit(unsigned char byte, int i)
 
 void descompactar(No *raiz)
 {
-    FILE *arquivo = fopen("compactado.wg", "rb");
+    FILE *arquivo = fopen("./compactado.wg", "rb");
     No *aux = raiz;
     unsigned char byte;
     int i;
@@ -403,7 +405,7 @@ void descompactar(No *raiz)
 /*---------------------------------------------------------------------*/
 int descobrir_tamanho()
 {
-    FILE *arq = fopen("teste.txt", "r");
+    FILE *arq = fopen("./input.txt", "r");
     int tam = 0;
 
     if (arq)
@@ -423,7 +425,7 @@ int descobrir_tamanho()
 
 void ler_texto(unsigned char *texto)
 {
-    FILE *arq = fopen("teste.txt", "r");
+    FILE *arq = fopen("./input.txt", "r");
     char letra;
     int i = 0;
 

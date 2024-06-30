@@ -1,6 +1,3 @@
-#ifndef COMPRIMIR_DESCOMPRIMIR_H
-#define COMPRIMIR_DESCOMPRIMIR_H
-
 /*--------------------- PARTE 1: TABELA DE FREQUÊNCIA----------------------*/
 
 typedef struct no {
@@ -69,4 +66,4 @@ void descompactar(No *raiz);
 int descobrir_tamanho();
 void ler_texto(unsigned char *texto);
 
-#endif //COMPRIMIR_DESCOMPRIMIR_H
+
