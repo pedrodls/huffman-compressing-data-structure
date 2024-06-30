@@ -6,19 +6,58 @@
 
 int main()
 {
-    void encodeFromMain();
 
-    void decocodeFromMain();
+    void menu();
 
     SetConsoleOutputCP(65001);
 
-    encodeFromMain();
-
-    decocodeFromMain();
-
-    
+    menu();
 
     return 0;
+}
+
+void menu()
+{
+    void encodeFromMain();
+
+    void decodeFromMain();
+
+    fflush(stdin);
+    system("cls");
+
+    char op;
+
+    printf("\n*******Compact | Descompact******\n");
+    printf("* Escolha a sua opcao\t\t*\n");
+    printf("* 1 - Compactar\t\t\t*\n");
+    printf("* 2 - Descompactar\t\t*\n");
+    printf("* 3 - Sair\t\t\t*");
+    printf("\n*********************************\n");
+    fflush(stdin);
+
+    scanf("%c", &op);
+
+    switch (op)
+    {
+    case '1':
+        encodeFromMain();
+        system("pause");
+        menu();
+
+    case '2':
+        decodeFromMain();
+        system("pause");
+        menu();
+
+    case '3':
+        printf("Volte sempre!");
+        exit(0);
+        break;
+    default:
+        printf("\n\nOpcao invalida!\n\n");
+        system("pause");
+        menu();
+    }
 }
 
 void encodeFromMain()
@@ -80,13 +119,12 @@ void encodeFromMain()
 
     compact(codificado);
 
-
     free(strData);
     free(codificado);
     free(descodificado);
 }
 
-void decocodeFromMain()
+void decodeFromMain()
 {
 
     /*--------------------- PARTE 1: TABELA DE FREQUNCIA----------------------*/
@@ -108,6 +146,4 @@ void decocodeFromMain()
     huffmanTree = mountHuffmanTree(&myList);
 
     uncompact(huffmanTree);
-
-
 }
