@@ -6,6 +6,7 @@
 
 /*---------------------------------PARTE 1: TABELA DE FREQU�NCIA-------------------*/
 
+//Função para inicializar a tabela de frequência
 void initTable(unsigned int tab[])
 {
     for (int i = 0; i < TAM; i++)
@@ -14,6 +15,7 @@ void initTable(unsigned int tab[])
     }
 }
 
+//Função para preencher a tabela de frequência
 void fillFreqTable(unsigned char strData[], unsigned int tab[])
 {
     int i = 0;
@@ -24,6 +26,7 @@ void fillFreqTable(unsigned char strData[], unsigned int tab[])
     }
 }
 
+//Função para imprimir a tabela de frequência
 void printFreqTable(unsigned int tab[])
 {
     int i;
@@ -39,12 +42,14 @@ void printFreqTable(unsigned int tab[])
 
 /*---------------------PARTE 2: list ENCADEADA ORDENADA---------------*/
 
+// Inicializa a list encadeada
 void createList(list *list)
 {
     list->start = NULL;
     list->tam = 0;
 }
 
+// Insere um nó na list de forma ordenada por frequência
 void insertInOrder(list *list, node *newNode)
 {
     node *aux = NULL;
@@ -72,6 +77,7 @@ void insertInOrder(list *list, node *newNode)
     list->tam++;
 }
 
+// Preenche a list com os dados da tabela de frequência
 void fillList(unsigned int tab[], list *list)
 {
     int i;
@@ -99,6 +105,7 @@ void fillList(unsigned int tab[], list *list)
     }
 }
 
+// Imprime os elementos da list ordenada
 void printList(list *list)
 {
     node *aux = list->start;
@@ -113,6 +120,7 @@ void printList(list *list)
 
 /*---------------------PARTE 3: Montar �rvore de  Huffman ---------------*/
 
+// Função para remover um nó no início 
 node *removeNodeFromStart(list *list)
 {
     node *aux = NULL;
@@ -128,6 +136,7 @@ node *removeNodeFromStart(list *list)
     return aux;
 }
 
+// Função para montar a árvore de huffman
 node *mountHuffmanTree(list *list)
 {
     node *first, *second, *newNode;
@@ -157,6 +166,7 @@ node *mountHuffmanTree(list *list)
     return list->start;
 }
 
+//Função para imprimir a árvore de huffman
 void printHuffmanTree(node *centralNode, int tam)
 {
     if (centralNode->left == NULL && centralNode->right == NULL)
@@ -172,6 +182,7 @@ void printHuffmanTree(node *centralNode, int tam)
 
 /*---------------------PARTE 4: Montar o Dicion�rio ---------------*/
 
+// Função para calcular a altura da árvore de huffman
 int huffmanTreeHeight(node *centralNode)
 {
     int left, right;
@@ -196,10 +207,8 @@ int huffmanTreeHeight(node *centralNode)
     }
 }
 
-/*
- *
- */
 
+// Função para alocar dicionário
 char **allocateDictionary(int columns)
 {
     char **dictionary;
@@ -218,6 +227,7 @@ char **allocateDictionary(int columns)
 /*
  */
 
+// Função para gerar dicionário
 void generateDictionary(char **dictionary, node *centralNode, char *way, int columns)
 {
     char left[columns], right[columns];
@@ -239,9 +249,8 @@ void generateDictionary(char **dictionary, node *centralNode, char *way, int col
     }
 }
 
-/*
- Matriz de caracteres
- */
+
+// Função para imprimir um dicionário
 void printDictionary(char **dictionary)
 {
     printf("\t\nDicionário:\n");
@@ -253,6 +262,7 @@ void printDictionary(char **dictionary)
 }
 
 /*--------------------- PARTE 5: Codificar ----------------------------------*/
+// Função para calcular o tamanho da string
 int calculateStringSize(char **dictionary, unsigned char *strData)
 {
     int i = 0, tam = 0;
@@ -265,6 +275,7 @@ int calculateStringSize(char **dictionary, unsigned char *strData)
     return tam + 1;
 }
 
+//Função para codificar a string
 char *encode(char **dictionary, unsigned char *strData)
 {
 
@@ -282,6 +293,7 @@ char *encode(char **dictionary, unsigned char *strData)
 }
 
 /*--------------------- PARTE 6: Descodificar ----------------------------------*/
+//Função para decodificar a string
 char *decode(unsigned char strData[], node *centralNode)
 {
     int i = 0;
@@ -410,6 +422,7 @@ void uncompact(node *centralNode)
 }
 
 /*---------------------------------------------------------------------*/
+//Função para buscar o tamanho do ficheiro
 int findSize()
 {
     FILE *arq = fopen("./input.txt", "r");
@@ -430,6 +443,7 @@ int findSize()
     return tam;
 }
 
+//Função para ler string do ficheiro 
 void readText(unsigned char *strData)
 {
     FILE *arq = fopen("./input.txt", "r");
@@ -455,6 +469,7 @@ void readText(unsigned char *strData)
     }
 }
 
+//Função para ler a string codificada
 void readEncodedText(unsigned char *strData)
 {
     FILE *arq = fopen("./input.txt", "r");

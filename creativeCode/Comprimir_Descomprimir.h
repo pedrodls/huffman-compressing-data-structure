@@ -37,23 +37,39 @@ void fillList(unsigned int tab[], list *list);
 void printList(list *list);
 
 /*---------------------PARTE 3: Montar Árvore de  Huffman ---------------*/
-
+// Função para remover um nó no início 
 node *removeNodeFromStart(list *list);
+
+// Função para montar a árvore de huffman
 node *mountHuffmanTree(list *list);
+
+//Função para imprimir a árvore de huffman
 void printHuffmanTree(node *centralNode, int tam);
 
 /*---------------------PARTE 4: Montar o Dicionário ----------------------*/
 
+// Função para calcular a altura da árvore de huffman
 int huffmanTreeHeight(node *centralNode);
+
+// Função para alocar dicionário
 char **allocateDictionary(int columns);
+
+// Função para gerar dicionário 
 void generateDictionary(char **dictionary, node *centralNode, char *way, int columns);
+
+// Função para imprimir um dicionário
 void printDictionary(char **dictionary);
 
 /*--------------------- PARTE 5: Codificar ----------------------------------*/
+
+// Função para calcular o tamanho da string
 int calculateStringSize(char **dictionary, unsigned char *strData);
+
+//Função para codificar a string
 char *encode(char **dictionary, unsigned char *strData);
 
 /*--------------------- PARTE 6: Decodificar ----------------------------------*/
+//Função para decodificar a string
 char *decode(unsigned char strData[], node *centralNode);
 
 /*--------------------- PARTE 7: Compactar----------------------------------*/
@@ -65,7 +81,11 @@ unsigned int verifyBit(unsigned char byte, int i);
 void uncompact(node *centralNode);
 /*-----------------------------------------------------------------------------
  */
+
+//Função para buscar o tamanho do ficheiro
 int findSize();
+
+//Função para ler string do ficheiro 
 void readText(unsigned char *strData);
 
 // Função para salvar a tabela de frequencia em um arquivo
@@ -73,3 +93,6 @@ void saveTable(unsigned int tab[]);
 
 // Função para ler o dicionário de um arquivo
 void readTable(unsigned int tab[]);
+
+//Função para ler a string codificada
+void readEncodedText(unsigned char *strData);

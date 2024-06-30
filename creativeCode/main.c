@@ -16,6 +16,7 @@ int main()
     return 0;
 }
 
+
 void menu()
 {
     void encodeFromMain();
@@ -60,6 +61,7 @@ void menu()
     }
 }
 
+//Função que gera a compressão
 void encodeFromMain()
 {
 
@@ -124,6 +126,7 @@ void encodeFromMain()
     free(descodificado);
 }
 
+//Função que gera a descompressão
 void decodeFromMain()
 {
 

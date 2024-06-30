@@ -27,6 +27,7 @@ typedef struct HuffmanCode
     char *code;
 } HuffmanCode;
 
+//Função para criar um nó
 MinHeapNode *newNode(unsigned char data, unsigned freq)
 {
     MinHeapNode *temp = (MinHeapNode *)malloc(sizeof(MinHeapNode));
@@ -36,6 +37,7 @@ MinHeapNode *newNode(unsigned char data, unsigned freq)
     return temp;
 }
 
+//Função que cria um MinHeap
 MinHeap *createMinHeap(unsigned capacity)
 {
     MinHeap *minHeap = (MinHeap *)malloc(sizeof(MinHeap));
@@ -45,6 +47,7 @@ MinHeap *createMinHeap(unsigned capacity)
     return minHeap;
 }
 
+//Função que faz a troca de nós em minHeap
 void swapMinHeapNode(MinHeapNode **a, MinHeapNode **b)
 {
     MinHeapNode *t = *a;
@@ -52,6 +55,7 @@ void swapMinHeapNode(MinHeapNode **a, MinHeapNode **b)
     *b = t;
 }
 
+//Função que garante a formação de uma minHeap
 void minHeapify(MinHeap *minHeap, int idx)
 {
     int smallest = idx;
@@ -71,11 +75,13 @@ void minHeapify(MinHeap *minHeap, int idx)
     }
 }
 
+//Função que verifica se o tamanho da minHeap é 1
 int isSizeOne(MinHeap *minHeap)
 {
     return (minHeap->size == 1);
 }
 
+//Função que extrai um nó mínimo na minHeap
 MinHeapNode *extractMin(MinHeap *minHeap)
 {
     MinHeapNode *temp = minHeap->array[0];
@@ -85,6 +91,7 @@ MinHeapNode *extractMin(MinHeap *minHeap)
     return temp;
 }
 
+//Função que insere um novo nó em um minHeap
 void insertMinHeap(MinHeap *minHeap, MinHeapNode *minHeapNode)
 {
     ++minHeap->size;
@@ -97,6 +104,7 @@ void insertMinHeap(MinHeap *minHeap, MinHeapNode *minHeapNode)
     minHeap->array[i] = minHeapNode;
 }
 
+//Função que cria um minHeap
 void buildMinHeap(MinHeap *minHeap)
 {
     int n = minHeap->size - 1;
@@ -105,6 +113,7 @@ void buildMinHeap(MinHeap *minHeap)
         minHeapify(minHeap, i);
 }
 
+//Função que imprime o texto a ser compressado
 void printArr(int arr[], int n)
 {
     int i;
@@ -113,11 +122,13 @@ void printArr(int arr[], int n)
     printf("\n");
 }
 
+//Função que verifica se um nó é folha
 int isLeaf(MinHeapNode *root)
 {
     return !(root->left) && !(root->right);
 }
 
+//Função que um MinHeap
 MinHeap *createAndBuildMinHeap(char data[], int freq[], int size)
 {
     MinHeap *minHeap = createMinHeap(size);
@@ -132,6 +143,7 @@ MinHeap *createAndBuildMinHeap(char data[], int freq[], int size)
     return minHeap;
 }
 
+//Função que cria a árvore de Huffman
 MinHeapNode *buildHuffmanTree(char data[], int freq[], int size)
 {
     MinHeapNode *left, *right, *top;
@@ -152,6 +164,7 @@ MinHeapNode *buildHuffmanTree(char data[], int freq[], int size)
     return extractMin(minHeap);
 }
 
+//Função que escreve os códigos binários
 void printCodes(MinHeapNode *root, int arr[], int top, HuffmanCode *codes, int *index)
 {
     if (root->left)
@@ -177,6 +190,7 @@ void printCodes(MinHeapNode *root, int arr[], int top, HuffmanCode *codes, int *
     }
 }
 
+//Função que gera códigos binários
 void HuffmanCodes(char data[], int freq[], int size, HuffmanCode *codes)
 {
     struct MinHeapNode *root = buildHuffmanTree(data, freq, size);
@@ -186,6 +200,7 @@ void HuffmanCodes(char data[], int freq[], int size, HuffmanCode *codes)
     printCodes(root, arr, top, codes, &index);
 }
 
+//Função que gera compressão de ficheiro
 void compressFile(const char *inputFilename, const char *outputFilename, HuffmanCode *codes, int numCodes)
 {
     FILE *inputFile = fopen(inputFilename, "r");
@@ -233,6 +248,7 @@ void freeTree(MinHeapNode *node)
     }
 }
 
+//Função que gera descompressão de ficheiro
 void decompressFile(const char *inputFilename, const char *outputFilename)
 {
     FILE *inputFile = fopen(inputFilename, "r");
