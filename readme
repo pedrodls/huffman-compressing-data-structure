@@ -15,4 +15,13 @@ gcc -o main main.c Comprimir_Descomprimir.c
 #Rodar:
 ./main.exe
 
+#Compilação para o default:
+gcc -c main.c utils.c minHeap.c
+
+#Gerar objectos:
+gcc -o main main.c utils.c minHeap.c
+
+#Rodar:
+./main.exe
+
 
